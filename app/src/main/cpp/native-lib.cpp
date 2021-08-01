@@ -41,7 +41,7 @@ void callback(RTMPPacket * packet) {
 void releasePackets(RTMPPacket **pPacket) {
     if (pPacket) {
         RTMPPacket_Free(*pPacket);
-        delete pPacket;
+        //delete pPacket;
         pPacket = nullptr;
     }
 }
@@ -88,7 +88,7 @@ void *task_start(void *args) {
 
         RTMP_EnableWrite(rtmp);  // 开启输出模式
 
-        ret = RTMP_Connect(rtmp, nullptr);
+        ret = RTMP_Connect(rtmp, 0);
         if (!ret) {
             LOGE("trmp 建立连接失败: %d, url: %s.", ret, url);
             break;
@@ -105,7 +105,7 @@ void *task_start(void *args) {
         readyPushing = true;  // 准备好了可以推流
 
         // TODO 测试是不用发送序列头信息，是没有任何问题的，但是还是规矩
-        callback(audioChannel->getAudioSeqHeader());
+        //callback(audioChannel->getAudioSeqHeader());
 
         // 从队列拿到东西，直接发给服务器
         packets.setWork(true);
